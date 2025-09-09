@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HomeMade Pizzas</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: linear-gradient(to bottom right, #fff5f5, #fffbe6); }
+    header { text-align: center; padding: 20px; }
+    header h1 { color: #e63946; font-size: 2.5rem; margin: 0; }
+    header p { color: #555; }
+    .menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; padding: 20px; }
+    .card { background: #fff; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .card h3 { margin: 0; font-size: 1.2rem; color: #333; }
+    .card p { margin: 8px 0; color: #e63946; font-weight: bold; }
+    .btn { background: #e63946; color: #fff; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+    .btn:hover { background: #d62828; }
+    .cart { padding: 20px; text-align: center; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; background: #fff; margin: 6px 0; padding: 8px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    .qty-btn { border: 1px solid #ccc; padding: 4px 8px; cursor: pointer; border-radius: 6px; margin: 0 4px; }
+    .remove-btn { background: #ccc; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; margin-left: 8px; }
+    footer { text-align: center; padding: 20px; color: #555; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🍕 HomeMade Pizzas</h1>
+    <p>Delicious, fresh & homemade with love ❤️</p>
+  </header>
+
+  <section class="menu" id="menu"></section>
+
+  <section class="cart">
+    <h2>🛒 Your Cart</h2>
+    <div id="cart-items"></div>
+    <p id="cart-total" style="font-weight:bold; margin-top:10px;">Total: ₹0</p>
+    <button class="btn" id="order-btn" disabled>Order via WhatsApp</button>
+  </section>
+
+  <footer>
+    <p>📞 +91 9910563777 | 📍 PC 406, Noida</p>
+    <p>© <span id="year"></span> HomeMade Pizzas. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const menu = [
+      { name: "Margherita", price: 160 },
+      { name: "Single Topping Pizza", price: 170 },
+      { name: "Any 2 Toppings", price: 180 },
+      { name: "Any 3 Toppings", price: 190 },
+      { name: "Veg Loaded Pizza", price: 200 },
+    ];
+
+    const menuContainer = document.getElementById("menu");
+    const cartItemsContainer = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+    const orderBtn = document.getElementById("order-btn");
+
+    let cart = [];
+
+    function renderMenu() {
+      menu.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>₹${item.price}</p>
+          <button class="btn">Add to Cart</button>
+        `;
+        card.querySelector("button").onclick = () => addToCart(item);
+        menuContainer.appendChild(card);
+      });
+    }
+
+    function addToCart(item) {
+      const existing = cart.find(i => i.name === item.name);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ ...item, qty: 1 });
+      }
+      renderCart();
+    }
+
+    function increaseQty(name) {
+      cart = cart.map(item => item.name === name ? { ...item, qty: item.qty + 1 } : item);
+      renderCart();
+    }
+
+    function decreaseQty(name) {
+      cart = cart.map(item => item.name === name ? { ...item, qty: item.qty - 1 } : item).filter(item => item.qty > 0);
+      renderCart();
+    }
+
+    function removeItem(name) {
+      cart = cart.filter(item => item.name !== name);
+      renderCart();
+    }
+
+    function renderCart() {
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
+
+      cart.forEach(item => {
+        total += item.price * item.qty;
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <span>${item.name} (₹${item.price})</span>
+          <div>
+            <button class="qty-btn" onclick="decreaseQty('${item.name}')">-</button>
+            <span>${item.qty}</span>
+            <button class="qty-btn" onclick="increaseQty('${item.name}')">+</button>
+            <button class="remove-btn" onclick="removeItem('${item.name}')">x</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(div);
+      });
+
+      cartTotal.textContent = `Total: ₹${total}`;
+      orderBtn.disabled = cart.length === 0;
+    }
+
+    orderBtn.onclick = () => {
+      const orderText = cart.map(item => `${item.name} x${item.qty} - ₹${item.price * item.qty}`).join("%0A");
+      const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+      const message = `Hello, I would like to order:%0A${orderText}%0ATotal: ₹${total}`;
+      window.open(`https://wa.me/919910563777?text=${message}`, "_blank");
+    };
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    renderMenu();
+  </script>
+</body>
+</html>
