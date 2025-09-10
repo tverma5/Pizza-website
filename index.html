@@ -1,409 +1,390 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doughlicious Pizza | Home made base</title>
-    <style>
-        /* --- Google Font --- */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Doughlicious Pizza — Home made base</title>
 
-        /* --- Global Styles --- */
-        :root {
-            --primary-color: #c0392b;
-            --secondary-color: #f9f9f9;
-            --text-color: #333;
-            --background-color: #f1f2f6;
-            --whatsapp-color: #25D366;
-            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <style>
+    :root{
+      --accent:#b91c1c;       /* deep red */
+      --accent-2:#e74b3c;
+      --bg:#f7f6f5;           /* light grey/off-white */
+      --card:#ffffff;
+      --muted:#555557;
+      --radius:14px;
+      --shadow: 0 10px 30px rgba(30,30,30,0.06);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:linear-gradient(180deg,var(--bg),#fff);
+      color:#222;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+    /* card layout */
+    .wrap{
+      width:100%;
+      max-width:980px;
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      gap:0;
+      flex-direction:row;
+    }
+    @media (max-width:880px){
+      .wrap{flex-direction:column;padding:18px}
+    }
 
-        /* --- Main Container --- */
-        .container {
-            max-width: 500px;
-            width: 100%;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: var(--card-shadow);
-            overflow: hidden;
-        }
+    /* left: content */
+    .main{
+      flex:1;
+      padding:28px;
+    }
 
-        /* --- Header --- */
-        .header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
+    header{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      margin-bottom:20px;
+    }
+    .logo{
+      width:64px;height:64px;border-radius:12px;
+      background:linear-gradient(135deg,#ffd6a5,#ffafcc);
+      display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 6px 18px rgba(0,0,0,0.06)
+    }
+    h1{margin:0;font-size:1.25rem;color:var(--accent-2)}
+    .tag{margin:2px 0 0;font-size:0.9rem;color:var(--muted)}
 
-        .header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            font-weight: 700;
-        }
+    .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:10px}
+    @media (max-width:720px){ .menu-grid{grid-template-columns:1fr} }
 
-        .header p {
-            font-size: 1rem;
-            margin-top: 5px;
-            font-weight: 400;
-        }
+    .menu-card{
+      background:linear-gradient(180deg,#fff,#fffaf7);
+      border-radius:10px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;
+      border:1px solid #f0eaea;
+    }
+    .menu-card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+    .menu-title{display:flex;align-items:center;justify-content:space-between;width:100%}
+    .price{color:var(--accent);font-weight:700}
+    .radio-row{margin-top:6px;display:flex;gap:8px;align-items:center}
+    .toppings{width:100%;margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+    .toppings label{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:#fff;border:1px solid #f2f2f2;font-size:0.95rem;cursor:pointer}
+    .add-note{font-size:0.85rem;color:var(--muted);margin-top:6px;text-align:center}
 
-        /* --- Main Content Area --- */
-        .main-content {
-            padding: 30px;
-        }
-        
-        h2 {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
+    /* right: summary / action */
+    .side{
+      width:360px;
+      border-left:1px solid #f3f1f1;
+      padding:26px;
+      background:linear-gradient(180deg,#fff,#fffefc);
+    }
+    @media (max-width:880px){ .side{width:100%;border-left:none;border-top:1px solid #f3f1f1} }
 
-        /* --- Menu Items --- */
-        .menu-item {
-            display: flex;
-            align-items: center;
-            background-color: var(--secondary-color);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .menu-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
-        }
+    .summary-title{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .summary-box{margin-top:12px;background:#fff;border-radius:10px;padding:12px;border:1px solid #f3f2f2;box-shadow:0 6px 18px rgba(0,0,0,0.03)}
+    .line{display:flex;justify-content:space-between;padding:8px 4px}
+    .small{font-size:0.9rem;color:var(--muted)}
+    .total{font-weight:700;font-size:1.15rem;color:#222;margin-top:12px}
 
-        .menu-item-content {
-            display: flex;
-            align-items: center;
-            flex-grow: 1;
-        }
+    .cta{margin-top:14px;display:flex;gap:10px;flex-direction:column}
+    .btn{background:var(--accent);color:#fff;padding:12px;border-radius:10px;border:none;font-weight:700;cursor:pointer;font-size:1rem}
+    .btn.ghost{background:#fff;border:1px solid #eee;color:var(--muted)}
+    .btn:disabled{opacity:0.55;cursor:not-allowed}
 
-        .menu-item img {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            object-fit: cover;
-            margin-right: 15px;
-        }
+    .qr-wrap{margin-top:16px;text-align:center}
+    .qr-wrap img{width:200px;height:200px;border-radius:10px;border:1px solid #f0f0f0}
+    .pay-head{margin-top:12px;font-weight:700}
 
-        .menu-item label {
-            font-size: 1.1rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-grow: 1;
-        }
-        
-        .menu-item input[type="radio"]{
-            transform: scale(1.3);
-            accent-color: var(--primary-color);
-        }
+    footer{margin-top:18px;font-size:0.92rem;color:var(--muted);text-align:center}
 
-        .menu-item-details {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .menu-item-details .name {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .price {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-left: 15px; /* Adjust spacing */
-        }
-
-        /* --- Toppings Section --- */
-        .toppings-container {
-            background-color: #fdfdfd;
-            border: 1px solid #eee;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: -10px;
-            margin-bottom: 20px;
-        }
-
-        .toppings-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .topping label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1rem;
-        }
-        
-        .topping input[type="checkbox"]{
-            transform: scale(1.2);
-            accent-color: var(--primary-color);
-        }
-
-        /* --- Order Summary & Cart --- */
-        .cart {
-            background-color: var(--secondary-color);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-        }
-
-        #cart-items {
-            min-height: 60px;
-            margin-bottom: 20px;
-        }
-
-        #cart-items p {
-            margin-bottom: 8px;
-        }
-        
-        .total-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.3rem;
-            font-weight: 700;
-            border-top: 2px solid #ddd;
-            padding-top: 15px;
-        }
-        
-        #total-price-value {
-             color: var(--primary-color);
-        }
-
-        /* --- Buttons & Payment --- */
-        .actions {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .whatsapp-button {
-            display: block;
-            width: 100%;
-            background-color: var(--whatsapp-color);
-            color: white;
-            text-decoration: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-            transition: background-color 0.3s;
-        }
-
-        .whatsapp-button:hover {
-            background-color: #1EBE59;
-        }
-        
-        .payment-section h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        #qrcode {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 200px;
-        }
-
-        /* --- Footer --- */
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #f0f0f0;
-            color: #777;
-            font-size: 0.9rem;
-        }
-    </style>
+    input[type="tel"], input[type="text"]{width:100%;padding:10px;border-radius:8px;border:1px solid #eee;margin-top:8px}
+    label.inline{display:flex;align-items:center;gap:8px}
+    .muted-block{margin-top:8px;font-size:0.88rem;color:var(--muted)}
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <header class="header">
-            <h1>Doughlicious Pizza</h1>
-            <p>Home made base</p>
-        </header>
+  <div class="wrap" role="main" aria-labelledby="main-heading">
 
-        <main class="main-content">
-            <h2>Choose Your Pizza</h2>
+    <!-- left: content -->
+    <div class="main">
+      <header>
+        <div class="logo" aria-hidden>🍕</div>
+        <div>
+          <h1 id="main-heading">Doughlicious Pizza</h1>
+          <div class="tag">Home made base</div>
+        </div>
+      </header>
 
-            <div class="menu-item">
-                <img src="https://assets-prd-wegpages.azureedge.net/wegpages/wegmans-v2/pin/weg-pizza-cheese.jpg" alt="Margherita Pizza">
-                <div class="menu-item-details">
-                    <label>
-                        <input type="radio" name="pizza" value="margherita" data-price="160" checked>
-                        <span class="name">Margherita</span>
-                    </label>
-                </div>
-                <span class="price">₹160</span>
-            </div>
+      <section aria-label="Menu">
+        <div class="menu-grid" id="menuGrid">
+          <!-- Two menu cards (Margherita & With Toppings) are injected by JS.
+               The images used in code reference "photo1.jpg" and "photo2.jpg".
+               Place those files next to this HTML file. -->
+        </div>
+        <div class="add-note">Select a pizza and choose toppings (if available). Order summary updates instantly.</div>
+      </section>
 
-            <div class="menu-item">
-                <img src="https://www.cubesnjuliennes.com/wp-content/uploads/2021/02/Paneer-Tikka-Pizza.jpg" alt="Pizza with Toppings">
-                <div class="menu-item-details">
-                    <label>
-                        <input type="radio" name="pizza" value="with_toppings" data-price="180">
-                        <span class="name">Pizza with Toppings</span>
-                    </label>
-                </div>
-                <span class="price">₹180</span>
-            </div>
-
-            <div class="toppings-container" id="toppings-section" style="display:none;">
-                <div class="toppings-grid">
-                    <div class="topping"><label><input type="checkbox" value="Onion"> Onion</label></div>
-                    <div class="topping"><label><input type="checkbox" value="Tomato"> Tomato</label></div>
-                    <div class="topping"><label><input type="checkbox" value="Paneer"> Paneer</label></div>
-                    <div class="topping"><label><input type="checkbox" value="Capsicum"> Capsicum</label></div>
-                    <div class="topping"><label><input type="checkbox" value="Corn"> Corn</label></div>
-                </div>
-            </div>
-
-            <div class="cart">
-                <h2>Your Order</h2>
-                <div id="cart-items">
-                    <p>Your cart is empty.</p>
-                </div>
-                <div class="total-price">
-                    <span>Total:</span>
-                    <span id="total-price-value">₹0</span>
-                </div>
-            </div>
-
-            <div class="actions">
-                <a id="whatsapp-button" href="#" target="_blank" class="whatsapp-button">Order on WhatsApp</a>
-                <div class="payment-section">
-                    <h3>Pay Here</h3>
-                    <div id="qrcode"></div>
-                </div>
-            </div>
-        </main>
-
-        <footer class="footer">
-            <p>Contact: +919910563777 | Pick from: PC 406</p>
-        </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <!-- right: summary and actions -->
+    <aside class="side" aria-label="Order summary and payment">
+      <div class="summary-title">
+        <div>
+          <div style="font-size:1.05rem;font-weight:700">Order Summary</div>
+          <div class="small">Live update as you choose</div>
+        </div>
+      </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const pizzaOptions = document.querySelectorAll('input[name="pizza"]');
-            const toppingsSection = document.getElementById('toppings-section');
-            const toppingCheckboxes = toppingsSection.querySelectorAll('input[type="checkbox"]');
-            
-            const cartItemsDiv = document.getElementById('cart-items');
-            const totalPriceValue = document.getElementById('total-price-value');
-            const whatsappButton = document.getElementById('whatsapp-button');
-            const qrCodeContainer = document.getElementById('qrcode');
+      <div class="summary-box" id="summaryBox">
+        <div class="line"><div class="small">Selected Pizza</div><div id="selPizza" class="small">—</div></div>
+        <div class="line"><div class="small">Toppings</div><div id="selToppings" class="small">—</div></div>
+        <div class="line"><div class="small">Pickup</div><div id="pickupInfo" class="small">Pick from: PC 406</div></div>
 
-            const upiId = 'bhardwajtanu1989@okhdfcbank';
-            const whatsappNumber = '919910563777';
+        <div class="total" id="totalPrice">Total: ₹0</div>
 
-            // Initialize QRCode but don't draw until there's an amount
-            let qrCode = null;
+        <div style="margin-top:12px">
+          <label class="small">Your phone number (optional, for confirmation)</label>
+          <input type="tel" id="custPhone" placeholder="+9198xxxx..." inputmode="tel" />
+        </div>
 
-            function updateOrder() {
-                let total = 0;
-                let cartText = '';
-                let orderMessage = 'Hi Doughlicious Pizza,\n\nI would like to place the following order:\n';
+        <div class="cta">
+          <button id="waBtn" class="btn" title="Order on WhatsApp">Order on WhatsApp</button>
+          <button id="clearBtn" class="btn ghost">Clear selection</button>
+        </div>
 
-                const selectedPizza = document.querySelector('input[name="pizza"]:checked');
-                
-                if (selectedPizza) {
-                    const basePrice = parseInt(selectedPizza.dataset.price);
-                    total += basePrice;
-                    const pizzaNameElement = selectedPizza.closest('.menu-item-details').querySelector('.name');
-                    const pizzaName = pizzaNameElement ? pizzaNameElement.textContent.trim() : 'Unknown Pizza';
+        <div class="pay-head">Pay Here</div>
+        <div class="muted-block">Scan to pay exact amount via UPI</div>
+        <div class="qr-wrap" id="qrWrap" aria-live="polite" style="display:none">
+          <img id="qrImg" alt="UPI QR Code" src="" />
+          <div class="small muted-block">UPI ID: <strong>bhardwajtanu1989@okhdfcbank</strong></div>
+        </div>
+      </div>
 
-                    cartText += `<p><strong>Base:</strong> ${pizzaName}</p>`;
-                    orderMessage += `\n- ${pizzaName} (₹${basePrice})`;
+      <footer>
+        <div>Contact: <strong>+919910563777</strong></div>
+        <div>Pick from: <strong>PC 406</strong></div>
+      </footer>
+    </aside>
 
-                    // Show/hide toppings based on selection
-                    if (selectedPizza.value === 'with_toppings') {
-                        toppingsSection.style.display = 'block';
-                        
-                        const selectedToppings = [];
-                        toppingCheckboxes.forEach(checkbox => {
-                            if (checkbox.checked) {
-                                selectedToppings.push(checkbox.value);
-                            }
-                        });
+  </div>
 
-                        if (selectedToppings.length > 0) {
-                            cartText += `<p><strong>Toppings:</strong> ${selectedToppings.join(', ')}</p>`;
-                            orderMessage += `\n  - Toppings: ${selectedToppings.join(', ')}`;
-                        }
-                    } else {
-                        toppingsSection.style.display = 'none';
-                        // Uncheck all toppings if Margherita is selected
-                        toppingCheckboxes.forEach(checkbox => checkbox.checked = false);
-                    }
-                }
-                
-                // Update UI
-                cartItemsDiv.innerHTML = cartText || '<p>Select a pizza to begin.</p>';
-                totalPriceValue.textContent = `₹${total}`;
+  <script>
+    /*****************************************************************
+     * Doughlicious Pizza - Single page interactive menu
+     * - Put the images "photo1.jpg" (Margherita) and "photo2.jpg" (With Toppings)
+     *   in the same folder as this file.
+     * - The UPI QR uses Google's Chart API to generate QR images dynamically.
+     *   QR encodes a UPI payment URI including the exact amount.
+     *****************************************************************/
 
-                // Update WhatsApp Button
-                orderMessage += `\n\n*Total Amount: ₹${total}*`;
-                const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderMessage)}`;
-                whatsappButton.href = whatsappLink;
+    // menu data
+    const MENU = [
+      {
+        id: 'margherita',
+        name: 'Margherita',
+        price: 160,
+        img: 'photo1.jpg',
+        toppingsAvailable: false,
+        toppings: []
+      },
+      {
+        id: 'with_toppings',
+        name: 'Pizza with Toppings',
+        price: 180,
+        img: 'photo2.jpg',
+        toppingsAvailable: true,
+        toppings: ['Onion','Tomato','Paneer','Capsicum','Corn']
+      }
+    ];
 
-                // Update QR Code
-                qrCodeContainer.innerHTML = ''; // Clear previous QR
-                if (total > 0) {
-                    const upiString = `upi://pay?pa=${upiId}&pn=DoughliciousPizza&am=${total}.00&cu=INR&tn=OrderPayment`;
-                    new QRCode(qrCodeContainer, {
-                        text: upiString,
-                        width: 200,
-                        height: 200,
-                        colorDark: "#000000",
-                        colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-                } else {
-                    qrCodeContainer.innerHTML = '<p style="text-align:center; color:#777;">Select a pizza to generate QR code.</p>';
-                }
-            }
+    // DOM refs
+    const menuGrid = document.getElementById('menuGrid');
+    const selPizzaEl = document.getElementById('selPizza');
+    const selToppingsEl = document.getElementById('selToppings');
+    const totalPriceEl = document.getElementById('totalPrice');
+    const waBtn = document.getElementById('waBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const custPhone = document.getElementById('custPhone');
+    const qrWrap = document.getElementById('qrWrap');
+    const qrImg = document.getElementById('qrImg');
 
-            // Event Listeners
-            pizzaOptions.forEach(option => option.addEventListener('change', updateOrder));
-            toppingCheckboxes.forEach(checkbox => checkbox.addEventListener('change', updateOrder));
+    // state
+    let selectedPizzaId = null;
+    let selectedToppings = []; // array of strings
+    let totalAmount = 0;
 
-            // Initial call to set up the page
-            updateOrder();
+    // UPI details
+    const UPI_ID = 'bhardwajtanu1989@okhdfcbank';
+    const UPI_PAYEE_NAME = 'Doughlicious Pizza';
+
+    // WhatsApp number to send to (owner)
+    const WA_NUMBER = '919910563777';
+
+    // Render menu cards
+    function renderMenu(){
+      menuGrid.innerHTML = '';
+      MENU.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'menu-card';
+        card.innerHTML = `
+          <img src="${item.img}" alt="${item.name} photo" onerror="this.style.opacity=0.6; this.nextElementSibling.style.display='block'">
+          <div class="menu-title">
+            <div style="text-align:left">
+              <div style="font-weight:700">${item.name}</div>
+              <div class="small">${item.toppingsAvailable ? 'Choose toppings below' : 'Classic & simple'}</div>
+            </div>
+            <div class="price">₹${item.price}</div>
+          </div>
+
+          <div class="radio-row">
+            <label style="display:flex;align-items:center;gap:8px">
+              <input type="radio" name="pizzaSelect" value="${item.id}" ${item.id === 'margherita' ? 'checked' : ''}>
+              <span class="small">Select</span>
+            </label>
+          </div>
+
+          <div style="display:none" class="image-fallback small">Image not available — replace photo files.</div>
+        `;
+
+        // toppings UI (if available)
+        if(item.toppingsAvailable){
+          const topWrap = document.createElement('div');
+          topWrap.className = 'toppings';
+          item.toppings.forEach(tp => {
+            const lid = `${item.id}-tp-${tp.toLowerCase()}`;
+            const lab = document.createElement('label');
+            lab.innerHTML = `<input type="checkbox" id="${lid}" data-topping="${tp}"> ${tp}`;
+            topWrap.appendChild(lab);
+          });
+          card.appendChild(topWrap);
+        }
+
+        menuGrid.appendChild(card);
+      });
+
+      // attach events
+      document.getElementsByName('pizzaSelect').forEach(r => {
+        r.addEventListener('change', (e) => {
+          selectedPizzaId = e.target.value;
+          // When switching pizza, clear toppings selections
+          selectedToppings = [];
+          // Uncheck all topping checkboxes
+          document.querySelectorAll('.toppings input[type="checkbox"]').forEach(cb => cb.checked = false);
+          recompute();
         });
-    </script>
+      });
+
+      // attach checkbox handlers
+      document.querySelectorAll('.toppings input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', (e) => {
+          const topping = e.target.getAttribute('data-topping');
+          if(e.target.checked){
+            selectedToppings.push(topping);
+          } else {
+            selectedToppings = selectedToppings.filter(t => t !== topping);
+          }
+          recompute();
+        });
+      });
+
+      // default initial selection = first radio if none selected
+      const checked = document.querySelector('input[name="pizzaSelect"]:checked');
+      selectedPizzaId = checked ? checked.value : MENU[0].id;
+    }
+
+    // Recompute totals and update UI
+    function recompute(){
+      // find selected pizza
+      const pizza = MENU.find(m => m.id === selectedPizzaId) || MENU[0];
+      // total is pizza price (toppings don't add extra in this design)
+      totalAmount = pizza.price;
+      // update summary text
+      selPizzaEl.textContent = pizza.name;
+      selToppingsEl.textContent = (selectedToppings.length ? selectedToppings.join(', ') : 'None');
+
+      totalPriceEl.textContent = `Total: ₹${totalAmount}`;
+
+      // Update WhatsApp button (precompute URL)
+      const summaryLines = [];
+      summaryLines.push(`Order for Doughlicious Pizza:`);
+      summaryLines.push(`${pizza.name} - ₹${pizza.price}`);
+      if(selectedToppings.length) summaryLines.push(`Toppings: ${selectedToppings.join(', ')}`);
+      summaryLines.push(`Total: ₹${totalAmount}`);
+      const phoneVal = (custPhone.value || '').trim();
+      if(phoneVal) summaryLines.push(`Customer phone: ${phoneVal}`);
+      const finalMessage = encodeURIComponent(summaryLines.join('\n'));
+
+      waBtn.onclick = () => {
+        if(totalAmount <= 0){
+          alert('Please select a pizza first.');
+          return;
+        }
+        const waUrl = `https://wa.me/${WA_NUMBER}?text=${finalMessage}`;
+        window.open(waUrl, '_blank');
+      };
+
+      // Update QR code for UPI
+      updateUpiQr(totalAmount);
+    }
+
+    // Build UPI payload and set QR image src; hide if amount is zero
+    function updateUpiQr(amount){
+      if(!amount || amount <= 0){
+        qrWrap.style.display = 'none';
+        qrImg.src = '';
+        return;
+      }
+      qrWrap.style.display = 'block';
+
+      // UPI URI format
+      // pa = payee VPA, pn = payee name, am = amount, cu = currency
+      const upiUri = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(UPI_PAYEE_NAME)}&am=${encodeURIComponent(amount.toFixed(2))}&cu=INR`;
+      // Use Google Chart API to generate QR as an image
+      // Encode the UPI URI
+      const q = encodeURIComponent(upiUri);
+      // size 400x400 for clarity on phones
+      qrImg.src = `https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl=${q}&chld=L|1`;
+      qrImg.alt = `UPI QR code for ₹${amount.toFixed(2)}`;
+    }
+
+    // Clear selection
+    clearBtn.addEventListener('click', () => {
+      // reset radio to default first
+      const firstRadio = document.querySelector('input[name="pizzaSelect"]');
+      if(firstRadio) firstRadio.checked = true;
+      selectedPizzaId = firstRadio ? firstRadio.value : MENU[0].id;
+      selectedToppings = [];
+      document.querySelectorAll('.toppings input[type="checkbox"]').forEach(cb => cb.checked = false);
+      custPhone.value = '';
+      recompute();
+    });
+
+    // react to customer phone change to include in WA message immediately
+    custPhone.addEventListener('input', recompute);
+
+    // initial render and compute
+    renderMenu();
+    recompute();
+
+    // Accessibility: allow enter key on WA button to open same link
+    waBtn.addEventListener('keyup', (e) => { if(e.key === 'Enter') waBtn.click(); });
+
+    // If images missing, the img fallback style will indicate image not available.
+    // NOTE for you: replace "photo1.jpg" and "photo2.jpg" with actual images in the same folder.
+  </script>
+
 </body>
 </html>
