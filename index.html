@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Doughlicious Pizza</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #faf8f6;
+      --card:#fff;
+      --accent:#b71c1c;
+      --muted:#6b6b6b;
+      --shadow: 0 6px 22px rgba(15,15,15,0.06);
+      --radius:16px;
+    }
+    *{box-sizing:border-box;font-family:'Poppins',system-ui;}
+    body{
+      margin:0;
+      min-height:100vh;
+      background: linear-gradient(180deg,var(--bg),#f3efee 70%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      color:#333;
+    }
+
+    .container{
+      width:100%;
+      max-width:980px;
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:24px;
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:20px;
+    }
+    @media (max-width:900px){ .container{grid-template-columns:1fr; padding:18px;} }
+
+    header{grid-column:1/-1; text-align: center; margin-bottom:16px;}
+    .logo{font-size:36px; display: block; margin-bottom: 8px;}
+    header h1{margin:0;font-weight:600;font-size:24px;color:var(--accent);}
+    header p{margin:0;font-size:14px;color:var(--muted);}
+
+    .menu{padding:12px;border-radius:10px;background:#fff;display:flex;flex-direction:column;gap:12px;}
+    .menu-card{display:flex;gap:12px;align-items:center;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);}
+    .menu-card img{width:120px;height:80px;object-fit:cover;border-radius:8px;}
+    .menu-info{flex:1;}
+    .menu-info h3{margin:0;font-size:16px;}
+    .price{font-weight:600;color:var(--accent);margin-top:6px;}
+    .toppings{padding-left:12px; display:grid; grid-template-columns:repeat(2,1fr); gap:6px; font-size:14px;}
+    .small{font-size:13px;color:var(--muted);}
+
+    .cart{padding:12px;border-radius:10px;background:#fff;display:flex;flex-direction:column;gap:12px;position:sticky;top:20px;}
+    .cart h2{margin:0;font-size:18px;color:#222;}
+    .cart-list{display:flex;flex-direction:column;gap:10px;max-height:360px;overflow:auto;}
+    .cart-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px;border-radius:8px;background:#fbfbfb;border:1px solid rgba(0,0,0,0.03);}
+    .cart-item img{width:56px;height:40px;object-fit:cover;border-radius:6px;}
+    .cart-item .meta{font-size:13px;}
+    .qty-controls{display:flex;gap:6px;align-items:center;}
+    .btn{border:0;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-family:'Poppins',sans-serif;}
+    .btn-outline{background:transparent;border:1px solid rgba(0,0,0,0.08);}
+    .btn-danger{background:#ff4d4d;color:#fff;}
+    .btn-primary{background:var(--accent);color:#fff;}
+    .total-row{display:flex;justify-content:space-between;align-items:center;padding-top:6px;border-top:1px dashed rgba(0,0,0,0.06);}
+
+    .pay-area{text-align:center;padding:10px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.03);}
+    .qr{display:inline-block;padding:10px;border-radius:8px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.04);}
+    .muted{color:var(--muted);font-size:13px;}
+    footer{grid-column:1/-1;text-align:center;padding-top:10px;font-size:13px;color:var(--muted);}
+    .note{font-size:12px;color:var(--muted)}
+
+    /* Time input styling */
+    .time-input-group { margin-top: 12px; }
+    .time-input-group label { font-size: 14px; font-weight: 600; margin-right: 8px; }
+    .time-input-group input { padding: 6px; border-radius: 6px; border: 1px solid #ccc; font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">🍕</div>
+      <h1>Doughlicious Pizza</h1>
+      <p>— Home made base —</p>
+    </header>
+
+    <section class="menu">
+      <h2 style="margin:0 0 8px;font-size:18px">Choose your pizza</h2>
+      <div class="menu-card">
+        <input type="radio" id="pizza-margherita" name="pizza" value="margherita" data-price="160" />
+        <img src="photo1.jpg" alt="Margherita pizza"/>
+        <div class="menu-info">
+          <h3>Margherita</h3>
+          <div class="price">₹160</div>
+          <div class="small">Classic cheese & tomato.</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <input type="radio" id="pizza-toppings" name="pizza" value="withToppings" data-price="180" />
+        <img src="photo2.jpg" alt="Pizza with toppings"/>
+        <div class="menu-info">
+          <h3>Pizza with Toppings</h3>
+          <div class="price">₹180</div>
+          <div class="small">Choose toppings:</div>
+          <div id="toppingBlock" class="toppings">
+            <label><input type="checkbox" value="Onion" class="topping" disabled> Onion</label>
+            <label><input type="checkbox" value="Tomato" class="topping" disabled> Tomato</label>
+            <label><input type="checkbox" value="Paneer" class="topping" disabled> Paneer</label>
+            <label><input type="checkbox" value="Capsicum" class="topping" disabled> Capsicum</label>
+            <label><input type="checkbox" value="Corn" class="topping" disabled> Corn</label>
+          </div>
+        </div>
+      </div>
+
+      <button id="addToCartBtn" class="btn btn-primary" style="margin-top: 16px; padding: 12px;">Add Selected Pizza to Cart</button>
+    </section>
+
+    <aside class="cart">
+      <h2>Order Summary</h2>
+      <div class="cart-list" id="cartList"></div>
+      <div class="total-row">
+        <div class="muted">Total</div>
+        <div style="font-size:18px;font-weight:700" id="totalPrice">₹0</div>
+      </div>
+
+      <div class="time-input-group">
+        <label for="pickup-time">Pickup Time:</label>
+        <input type="time" id="pickup-time" name="pickup-time">
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button id="whatsappBtn" class="btn btn-primary" style="flex:1">Order on WhatsApp</button>
+        <button id="clearCart" class="btn btn-outline">Clear</button>
+      </div>
+
+      <div class="pay-area">
+        <h3 style="margin:0 0 8px;font-size:16px">Pay Here</h3>
+        <div id="qrWrap" class="qr" style="display:none">
+          <img id="upiQr" src="QR.jpg" alt="UPI QR code" style="width:190px;height:190px;object-fit:contain" />
+          <div class="muted" style="margin-top:8px">Scan to pay</div>
+        </div>
+        <div id="noQrNote" class="muted">QR code will appear when your order total > ₹0.</div>
+      </div>
+      <div style="text-align:center;font-size:12px;color:var(--muted);margin-top:6px">
+        UPI ID: <b>bhardwajtanu1989@okhdfcbank</b>
+      </div>
+    </aside>
+
+    <footer>
+      Contact: <b>+91 9910563777</b> | Pick from: <b>PC 406</b>
+    </footer>
+  </div>
+
+  <script>
+    const pizzaData = {
+      margherita: {id:'margherita', name:'Margherita', price:160, image:'photo1.jpg'},
+      withToppings: {id:'withToppings', name:'Pizza with Toppings', price:180, image:'photo2.jpg'}
+    };
+    const upiId = 'bhardwajtanu1989@okhdfcbank';
+    const waPhone = '919910563777';
+    let cart = [];
+
+    const el = (s)=>document.querySelector(s);
+    const els=(s)=>Array.from(document.querySelectorAll(s));
+    const formatINR=(n)=>'₹'+Number(n).toLocaleString('en-IN');
+
+    function renderCart(){
+      const cartList=el('#cartList');
+      cartList.innerHTML='';
+      if(cart.length===0){cartList.innerHTML='<div class="muted" style="text-align: center; padding: 10px;">Cart is empty.</div>';}
+      else{
+        cart.forEach((item,i)=>{
+          cartList.innerHTML+=`
+          <div class="cart-item">
+            <div style="display:flex; align-items:center; gap: 8px; flex-grow: 1;">
+              <img src="${item.image}" alt="${item.name}">
+              <div class="meta">
+                <div style="font-weight:600">${item.name}</div>
+                <div class="small">${item.toppings?.length? 'Toppings: '+item.toppings.join(', '):'No extra toppings'}</div>
+              </div>
+            </div>
+            <div class="qty-controls">
+              <button class="btn btn-outline" onclick="decItem(${i})">-</button>
+              <div>${item.qty}</div>
+              <button class="btn btn-outline" onclick="incItem(${i})">+</button>
+              <button class="btn btn-danger" style="margin-left: 5px;" onclick="delItem(${i})">X</button>
+            </div>
+          </div>`;
+        });
+      }
+      updateTotal();
+    }
+
+    function updateTotal(){
+      const total=cart.reduce((s,it)=>s+it.price*it.qty,0);
+      el('#totalPrice').textContent=formatINR(total);
+      
+      if(total>0){
+        el('#qrWrap').style.display="block";
+        el('#noQrNote').style.display="none";
+      } else {
+        el('#qrWrap').style.display="none";
+        el('#noQrNote').style.display="block";
+      }
+    }
+
+    function addSelectedPizzaToCart(){
+      const selectedPizza = el('input[name="pizza"]:checked');
+      if (!selectedPizza) {
+        alert("Please select a pizza first!");
+        return;
+      }
+      
+      const val = selectedPizza.value;
+      const data = pizzaData[val];
+      if (!data) return;
+
+      let toppings = [];
+      if (val === 'withToppings') {
+        toppings = els('.topping:checked').map(c => c.value);
+      }
+      
+      const existing = cart.find(c => c.id === val && JSON.stringify(c.toppings) === JSON.stringify(toppings));
+      
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({id:val, name:data.name, price:data.price, qty:1, toppings, image:data.image});
+      }
+      renderCart();
+    }
+
+    function incItem(i){cart[i].qty++;renderCart();}
+    function decItem(i){if(cart[i].qty > 1) {cart[i].qty--; renderCart();}}
+    function delItem(i){if(confirm('Remove this item from the cart?')) {cart.splice(i,1);renderCart();}}
+
+    function buildWhatsAppMessage(){
+      if(cart.length===0)return 'Hello, I would like to order.';
+      let lines=['Hi! I want to order:'];
+      cart.forEach(it=>{
+        const t=it.toppings?.length?` (Toppings: ${it.toppings.join(', ')})`:'';
+        lines.push(`- ${it.qty} x ${it.name}${t} — ${formatINR(it.price*it.qty)}`);
+      });
+      const total=cart.reduce((s,it)=>s+it.price*it.qty,0);
+      const pickupTime = el('#pickup-time').value;
+      
+      lines.push('',`Total: *${formatINR(total)}*`);
+
+      if (pickupTime) {
+        lines.push(`\nPickup Time: *${pickupTime}*`);
+      }
+      
+      lines.push('\nPickup Location: PC 406','Contact: +91 9910563777');
+      return lines.join('\n');
+    }
+
+    el('#addToCartBtn').onclick = addSelectedPizzaToCart;
+
+    el('#whatsappBtn').onclick=()=>{
+      if(cart.length===0){alert('Your cart is empty.');return;}
+      const pickupTime = el('#pickup-time').value;
+
+      if (!pickupTime) {
+          alert("Please select a suitable pickup time before placing the order.");
+          return;
+      }
+
+      const msg=buildWhatsAppMessage();
+      if(confirm(msg+'\n\nIs this order correct? Send on WhatsApp?')){
+        window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`,'_blank');
+      }
+    };
+    
+    el('#clearCart').onclick=()=>{
+      if(cart.length > 0 && confirm('Are you sure you want to clear the entire cart?')){
+        cart=[];
+        els('input[name="pizza"]').forEach(r=>r.checked=false);
+        els('.topping').forEach(c=>c.checked=false);
+        els('.topping').forEach(c => c.disabled = true);
+        renderCart();
+      }
+    };
+    
+    els('input[name="pizza"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            const toppingsEnabled = el('#pizza-toppings').checked;
+            els('.topping').forEach(checkbox => {
+                checkbox.disabled = !toppingsEnabled;
+                if (!toppingsEnabled) {
+                    checkbox.checked = false;
+                }
+            });
+        });
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>
