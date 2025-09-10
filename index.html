@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doughlicious Pizza | Home made base</title>
+    <style>
+        /* --- Google Font --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        /* --- Global Styles --- */
+        :root {
+            --primary-color: #c0392b;
+            --secondary-color: #f9f9f9;
+            --text-color: #333;
+            --background-color: #f1f2f6;
+            --whatsapp-color: #25D366;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- Main Container --- */
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        /* --- Header --- */
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1rem;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        /* --- Main Content Area --- */
+        .main-content {
+            padding: 30px;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* --- Menu Items --- */
+        .menu-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+        }
+
+        .menu-item-content {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .menu-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .menu-item label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-grow: 1;
+        }
+        
+        .menu-item input[type="radio"]{
+            transform: scale(1.3);
+            accent-color: var(--primary-color);
+        }
+
+        .menu-item-details {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .menu-item-details .name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-left: 15px; /* Adjust spacing */
+        }
+
+        /* --- Toppings Section --- */
+        .toppings-container {
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .toppings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .topping label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+        
+        .topping input[type="checkbox"]{
+            transform: scale(1.2);
+            accent-color: var(--primary-color);
+        }
+
+        /* --- Order Summary & Cart --- */
+        .cart {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        #cart-items {
+            min-height: 60px;
+            margin-bottom: 20px;
+        }
+
+        #cart-items p {
+            margin-bottom: 8px;
+        }
+        
+        .total-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-top: 2px solid #ddd;
+            padding-top: 15px;
+        }
+        
+        #total-price-value {
+             color: var(--primary-color);
+        }
+
+        /* --- Buttons & Payment --- */
+        .actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .whatsapp-button {
+            display: block;
+            width: 100%;
+            background-color: var(--whatsapp-color);
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #1EBE59;
+        }
+        
+        .payment-section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>Doughlicious Pizza</h1>
+            <p>Home made base</p>
+        </header>
+
+        <main class="main-content">
+            <h2>Choose Your Pizza</h2>
+
+            <div class="menu-item">
+                <img src="https://assets-prd-wegpages.azureedge.net/wegpages/wegmans-v2/pin/weg-pizza-cheese.jpg" alt="Margherita Pizza">
+                <div class="menu-item-details">
+                    <label>
+                        <input type="radio" name="pizza" value="margherita" data-price="160" checked>
+                        <span class="name">Margherita</span>
+                    </label>
+                </div>
+                <span class="price">₹160</span>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://www.cubesnjuliennes.com/wp-content/uploads/2021/02/Paneer-Tikka-Pizza.jpg" alt="Pizza with Toppings">
+                <div class="menu-item-details">
+                    <label>
+                        <input type="radio" name="pizza" value="with_toppings" data-price="180">
+                        <span class="name">Pizza with Toppings</span>
+                    </label>
+                </div>
+                <span class="price">₹180</span>
+            </div>
+
+            <div class="toppings-container" id="toppings-section" style="display:none;">
+                <div class="toppings-grid">
+                    <div class="topping"><label><input type="checkbox" value="Onion"> Onion</label></div>
+                    <div class="topping"><label><input type="checkbox" value="Tomato"> Tomato</label></div>
+                    <div class="topping"><label><input type="checkbox" value="Paneer"> Paneer</label></div>
+                    <div class="topping"><label><input type="checkbox" value="Capsicum"> Capsicum</label></div>
+                    <div class="topping"><label><input type="checkbox" value="Corn"> Corn</label></div>
+                </div>
+            </div>
+
+            <div class="cart">
+                <h2>Your Order</h2>
+                <div id="cart-items">
+                    <p>Your cart is empty.</p>
+                </div>
+                <div class="total-price">
+                    <span>Total:</span>
+                    <span id="total-price-value">₹0</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <a id="whatsapp-button" href="#" target="_blank" class="whatsapp-button">Order on WhatsApp</a>
+                <div class="payment-section">
+                    <h3>Pay Here</h3>
+                    <div id="qrcode"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Contact: +919910563777 | Pick from: PC 406</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pizzaOptions = document.querySelectorAll('input[name="pizza"]');
+            const toppingsSection = document.getElementById('toppings-section');
+            const toppingCheckboxes = toppingsSection.querySelectorAll('input[type="checkbox"]');
+            
+            const cartItemsDiv = document.getElementById('cart-items');
+            const totalPriceValue = document.getElementById('total-price-value');
+            const whatsappButton = document.getElementById('whatsapp-button');
+            const qrCodeContainer = document.getElementById('qrcode');
+
+            const upiId = 'bhardwajtanu1989@okhdfcbank';
+            const whatsappNumber = '919910563777';
+
+            // Initialize QRCode but don't draw until there's an amount
+            let qrCode = null;
+
+            function updateOrder() {
+                let total = 0;
+                let cartText = '';
+                let orderMessage = 'Hi Doughlicious Pizza,\n\nI would like to place the following order:\n';
+
+                const selectedPizza = document.querySelector('input[name="pizza"]:checked');
+                
+                if (selectedPizza) {
+                    const basePrice = parseInt(selectedPizza.dataset.price);
+                    total += basePrice;
+                    const pizzaNameElement = selectedPizza.closest('.menu-item-details').querySelector('.name');
+                    const pizzaName = pizzaNameElement ? pizzaNameElement.textContent.trim() : 'Unknown Pizza';
+
+                    cartText += `<p><strong>Base:</strong> ${pizzaName}</p>`;
+                    orderMessage += `\n- ${pizzaName} (₹${basePrice})`;
+
+                    // Show/hide toppings based on selection
+                    if (selectedPizza.value === 'with_toppings') {
+                        toppingsSection.style.display = 'block';
+                        
+                        const selectedToppings = [];
+                        toppingCheckboxes.forEach(checkbox => {
+                            if (checkbox.checked) {
+                                selectedToppings.push(checkbox.value);
+                            }
+                        });
+
+                        if (selectedToppings.length > 0) {
+                            cartText += `<p><strong>Toppings:</strong> ${selectedToppings.join(', ')}</p>`;
+                            orderMessage += `\n  - Toppings: ${selectedToppings.join(', ')}`;
+                        }
+                    } else {
+                        toppingsSection.style.display = 'none';
+                        // Uncheck all toppings if Margherita is selected
+                        toppingCheckboxes.forEach(checkbox => checkbox.checked = false);
+                    }
+                }
+                
+                // Update UI
+                cartItemsDiv.innerHTML = cartText || '<p>Select a pizza to begin.</p>';
+                totalPriceValue.textContent = `₹${total}`;
+
+                // Update WhatsApp Button
+                orderMessage += `\n\n*Total Amount: ₹${total}*`;
+                const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderMessage)}`;
+                whatsappButton.href = whatsappLink;
+
+                // Update QR Code
+                qrCodeContainer.innerHTML = ''; // Clear previous QR
+                if (total > 0) {
+                    const upiString = `upi://pay?pa=${upiId}&pn=DoughliciousPizza&am=${total}.00&cu=INR&tn=OrderPayment`;
+                    new QRCode(qrCodeContainer, {
+                        text: upiString,
+                        width: 200,
+                        height: 200,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                } else {
+                    qrCodeContainer.innerHTML = '<p style="text-align:center; color:#777;">Select a pizza to generate QR code.</p>';
+                }
+            }
+
+            // Event Listeners
+            pizzaOptions.forEach(option => option.addEventListener('change', updateOrder));
+            toppingCheckboxes.forEach(checkbox => checkbox.addEventListener('change', updateOrder));
+
+            // Initial call to set up the page
+            updateOrder();
+        });
+    </script>
+</body>
+</html>
